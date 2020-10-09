@@ -1,11 +1,11 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
-import db
+import loginoperations
 import sys
 
 class Ui_MainWindow(object):
     def __init__(self):
-        self.newportal = db.portal()
+        self.newportal = loginoperations.portal()
 
     def setupUi(self):
         self.MainWindow=QtWidgets.QMainWindow()
@@ -104,7 +104,7 @@ class Ui_MainWindow(object):
         elif(status==2):
             self.login_error_popup('pw')
         elif(status==3):
-            self.showstatus(username)
+            self.login_success_actions(username)
 
     def login_error_popup(self, errortype):
         msg=QMessageBox()
@@ -277,17 +277,21 @@ class Ui_MainWindow(object):
         else:
             self.MainWindow.close()
 
-    def showstatus(self, username):
-        self.clearLayout(self.centralwidget)
-        self.centralwidget = QtWidgets.QWidget(self.MainWindow)
-        self.centralwidget.setObjectName("centralwidget")
-        self.label = QtWidgets.QLabel(self.centralwidget)
-        self.label.setGeometry(QtCore.QRect(160, 40, 301, 41))
-        font = QtGui.QFont()
-        font.setPointSize(12)
-        self.label.setFont(font)
-        self.label.setText("You're logged in as "+username)
-        self.MainWindow.setCentralWidget(self.centralwidget)
+    def login_success_actions(self, username):
+        # self.clearLayout(self.centralwidget)
+        # self.centralwidget = QtWidgets.QWidget(self.MainWindow)
+        # self.centralwidget.setObjectName("centralwidget")
+        # self.label = QtWidgets.QLabel(self.centralwidget)
+        # self.label.setGeometry(QtCore.QRect(160, 40, 301, 41))
+        # font = QtGui.QFont()
+        # font.setPointSize(12)
+        # self.label.setFont(font)
+        # self.label.setText("You're logged in as "+username)
+        # self.MainWindow.setCentralWidget(self.centralwidget)
+
+        self.MainWindow.close()
+        print(username)
+        return username
 
     def clearLayout(self, layout):
         layout.deleteLater()
