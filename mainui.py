@@ -1,5 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
+from PyQt5.QtGui import QIntValidator
 import sys
 
 class Ui_MainWindow(object):
@@ -45,6 +46,7 @@ class Ui_MainWindow(object):
         font.setPointSize(8)
         self.addToSavings.setFont(font)
         self.addToSavings.setObjectName("addToSavings")
+        self.addToSavings.clicked.connect(lambda: self.radioButtonChecker(self.addToSavings))
 
         self.addToWallet = QtWidgets.QRadioButton(self.addMoneyBox)
         self.addToWallet.setGeometry(QtCore.QRect(70, 60, 82, 17))
@@ -52,6 +54,7 @@ class Ui_MainWindow(object):
         font.setPointSize(8)
         self.addToWallet.setFont(font)
         self.addToWallet.setObjectName("addToWallet")
+        self.addToWallet.clicked.connect(lambda: self.radioButtonChecker(self.addToWallet))
 
         self.addButton = QtWidgets.QPushButton(self.addMoneyBox)
         self.addButton.setGeometry(QtCore.QRect(280, 32, 121, 41))
@@ -128,6 +131,98 @@ class Ui_MainWindow(object):
         self.mainlabel.setText(_translate("MainWindow", "Main Menu"))
 
         QtCore.QMetaObject.connectSlotsByName(self.MainWindow)
+
+    def radioButtonChecker(self, button):
+        if button.isChecked():
+            if button.text()=='To Savings':
+                self.addButton.clicked.connect(lambda: self.mainMenuOptions('add', 's'))
+            elif button.text()=='To Wallet':
+                self.addButton.clicked.connect(lambda: self.mainMenuOptions('add', 'w'))
+
+    def mainMenuOptions(self, action, account):
+        if action=='add':
+            if account=='s':
+                self.addMenu('s')
+            else:
+                self.addMenu('w')
+
+    def addMenu(self, account):
+        self.centralwidget.deleteLater()
+        self.centralwidget = QtWidgets.QWidget(self.MainWindow)
+        self.centralwidget.setObjectName("centralwidget")
+
+
+        self.headLabel = QtWidgets.QLabel(self.centralwidget)
+        self.headLabel.setGeometry(QtCore.QRect(80, 30, 521, 61))
+        font = QtGui.QFont()
+        font.setFamily("Baron Neue")
+        font.setPointSize(28)
+        self.headLabel.setFont(font)
+        self.headLabel.setObjectName("headLabel")
+
+        self.sBalLabel = QtWidgets.QLabel(self.centralwidget)
+        self.sBalLabel.setGeometry(QtCore.QRect(50, 120, 291, 31))
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        self.sBalLabel.setFont(font)
+        self.sBalLabel.setObjectName("sBalLabel")
+
+        self.wBalLabel = QtWidgets.QLabel(self.centralwidget)
+        self.wBalLabel.setGeometry(QtCore.QRect(50, 140, 201, 31))
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        self.wBalLabel.setFont(font)
+        self.wBalLabel.setObjectName("wBalLabel")
+
+        self.getAmtLabel = QtWidgets.QLabel(self.centralwidget)
+        self.getAmtLabel.setGeometry(QtCore.QRect(110, 210, 201, 41))
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.getAmtLabel.setFont(font)
+        self.getAmtLabel.setObjectName("getAmtLabel")
+
+        self.getAmount = QtWidgets.QLineEdit(self.centralwidget)
+        self.getAmount.setGeometry(QtCore.QRect(330, 215, 171, 31))
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.getAmount.setFont(font)
+        self.getAmount.setValidator(QIntValidator(0,2147483647))
+        self.getAmount.setObjectName("getAmount")
+
+        self.addButton = QtWidgets.QPushButton(self.centralwidget)
+        self.addButton.setGeometry(QtCore.QRect(140, 270, 331, 41))
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.addButton.setFont(font)
+        self.addButton.setObjectName("addButton")
+
+        self.mainMenuButton = QtWidgets.QPushButton(self.centralwidget)
+        self.mainMenuButton.setGeometry(QtCore.QRect(170, 410, 101, 31))
+        self.mainMenuButton.setObjectName("mainMenuButton")
+
+        self.logoutButton = QtWidgets.QPushButton(self.centralwidget)
+        self.logoutButton.setGeometry(QtCore.QRect(350, 410, 101, 31))
+        self.logoutButton.setObjectName("logoutButton")     
+
+
+        self.MainWindow.setCentralWidget(self.centralwidget)       
+
+        _translate = QtCore.QCoreApplication.translate
+
+        if account=='w':
+            self.headLabel.setText(_translate("MainWindow", "add money to wallet"))
+        else:
+            self.headLabel.setText(_translate("MainWindow", "add money to savings"))
+
+        self.sBalLabel.setText(_translate("MainWindow", "Savings Balance: [Amount]"))
+        self.wBalLabel.setText(_translate("MainWindow", "Wallet Balance:  [Amount]"))
+        self.getAmtLabel.setText(_translate("MainWindow", "Enter the Amount to Add:"))
+        self.addButton.setText(_translate("MainWindow", "Add Money"))
+        self.mainMenuButton.setText(_translate("MainWindow", "Back to Main Menu"))
+        self.logoutButton.setText(_translate("MainWindow", "Logout"))
+
+    def spendMenu(self, account):
+        pass
 
 
 if __name__ == "__main__":
