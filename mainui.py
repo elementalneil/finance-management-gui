@@ -219,6 +219,7 @@ class Ui_MainWindow(object):
         self.mainMenuButton = QtWidgets.QPushButton(self.centralwidget)
         self.mainMenuButton.setGeometry(QtCore.QRect(170, 410, 101, 31))
         self.mainMenuButton.setObjectName("mainMenuButton")
+        self.mainMenuButton.clicked.connect(self.mainMenu)
 
         self.logoutButton = QtWidgets.QPushButton(self.centralwidget)
         self.logoutButton.setGeometry(QtCore.QRect(350, 410, 101, 31))
@@ -294,6 +295,7 @@ class Ui_MainWindow(object):
         self.mainMenuButton = QtWidgets.QPushButton(self.centralwidget)
         self.mainMenuButton.setGeometry(QtCore.QRect(170, 410, 101, 31))
         self.mainMenuButton.setObjectName("mainMenuButton")
+        self.mainMenuButton.clicked.connect(self.mainMenu)
 
         self.logoutButton = QtWidgets.QPushButton(self.centralwidget)
         self.logoutButton.setGeometry(QtCore.QRect(350, 410, 101, 31))
@@ -369,6 +371,7 @@ class Ui_MainWindow(object):
         self.mainMenuButton = QtWidgets.QPushButton(self.centralwidget)
         self.mainMenuButton.setGeometry(QtCore.QRect(170, 410, 101, 31))
         self.mainMenuButton.setObjectName("mainMenuButton")
+        self.mainMenuButton.clicked.connect(self.mainMenu)
 
         self.logoutButton = QtWidgets.QPushButton(self.centralwidget)
         self.logoutButton.setGeometry(QtCore.QRect(350, 410, 101, 31))
