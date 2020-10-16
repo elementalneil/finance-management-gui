@@ -89,6 +89,7 @@ class Ui_MainWindow(object):
         self.label.setText(_translate("MainWindow", "Log in to Your Account"))
         self.label_2.setText(_translate("MainWindow", "Username"))
         self.loginButton.setText(_translate("MainWindow", "LOGIN"))
+        self.loginButton.setShortcut(_translate("MainWindow", "Return"))
         self.label_3.setText(_translate("MainWindow", "Password"))
         self.signupButton.setText(_translate("MainWindow", "Signup Instead..."))
 
@@ -216,6 +217,7 @@ class Ui_MainWindow(object):
         self.label_3.setText(_translate("MainWindow", "Password"))
         self.label_4.setText(_translate("MainWindow", "Confirm Password"))
         self.signupButton.setText(_translate("MainWindow", "SIGN UP"))
+        self.signupButton.setShortcut(_translate("MainWindow", "Return"))
         self.loginButton.setText(_translate("MainWindow", "Login Instead..."))
 
         self.signupButton.clicked.connect(lambda: self.getsignupfields(self.inputUsername.text(), self.inputPassword.text(), self.inputPassword2.text()))

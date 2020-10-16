@@ -240,6 +240,7 @@ class Ui_MainWindow(object):
         self.getAmtLabel.setText(_translate("MainWindow", "Enter the Amount to Add:"))
         self.addButton.setText(_translate("MainWindow", "Add Money"))
         self.mainMenuButton.setText(_translate("MainWindow", "Back to Main Menu"))
+        self.mainMenuButton.setShortcut(_translate("MainWindow", "Escape"))
         self.logoutButton.setText(_translate("MainWindow", "Logout"))
 
     def spendMenu(self, account):
@@ -316,6 +317,7 @@ class Ui_MainWindow(object):
         self.getAmtLabel.setText(_translate("MainWindow", "Enter the Amount to Spend:"))
         self.spendButton.setText(_translate("MainWindow", "Spend Money"))
         self.mainMenuButton.setText(_translate("MainWindow", "Back to Main Menu"))
+        self.mainMenuButton.setShortcut(_translate("MainWindow", "Escape"))
         self.logoutButton.setText(_translate("MainWindow", "Logout"))
 
     def moveMenu(self, account):
@@ -392,6 +394,7 @@ class Ui_MainWindow(object):
         self.getAmtLabel.setText(_translate("MainWindow", "Enter the Amount to Move:"))
         self.moveButton.setText(_translate("MainWindow", "Move Money"))
         self.mainMenuButton.setText(_translate("MainWindow", "Back to Main Menu"))
+        self.mainMenuButton.setShortcut(_translate("MainWindow", "Escape"))
         self.logoutButton.setText(_translate("MainWindow", "Logout"))
 
 
