@@ -4,8 +4,9 @@ from PyQt5.QtGui import QIntValidator
 import sys
 
 class Ui_MainWindow(object):
-    def __init__(self):
-        pass
+    def __init__(self, username):
+        self.username=username
+        print('Logged in as '+self.username)
 
     def setupUi(self):
         self.MainWindow=QtWidgets.QMainWindow()

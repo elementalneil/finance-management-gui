@@ -6,6 +6,7 @@ import sys
 class Ui_MainWindow(object):
     def __init__(self):
         self.newportal = loginoperations.portal()
+        self.username = 'John'
 
     def setupUi(self):
         self.MainWindow=QtWidgets.QMainWindow()
@@ -292,8 +293,9 @@ class Ui_MainWindow(object):
         # self.MainWindow.setCentralWidget(self.centralwidget)
 
         self.MainWindow.close()
-        print(username)
-        return username
+        # print(username)
+        # return username
+        self.username=username
 
     def clearLayout(self, layout):
         layout.deleteLater()
