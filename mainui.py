@@ -222,9 +222,10 @@ class Ui_MainWindow(object):
         self.mainMenuButton.setObjectName("mainMenuButton")
         self.mainMenuButton.clicked.connect(self.mainMenu)
 
-        self.logoutButton = QtWidgets.QPushButton(self.centralwidget)
-        self.logoutButton.setGeometry(QtCore.QRect(350, 410, 101, 31))
-        self.logoutButton.setObjectName("logoutButton")     
+        self.closeButton = QtWidgets.QPushButton(self.centralwidget)
+        self.closeButton.setGeometry(QtCore.QRect(350, 410, 101, 31))
+        self.closeButton.setObjectName("closeButton")
+        self.closeButton.clicked.connect(self.closeAction)  
 
 
         self.MainWindow.setCentralWidget(self.centralwidget)       
@@ -242,7 +243,10 @@ class Ui_MainWindow(object):
         self.addButton.setText(_translate("MainWindow", "Add Money"))
         self.mainMenuButton.setText(_translate("MainWindow", "Back to Main Menu"))
         self.mainMenuButton.setShortcut(_translate("MainWindow", "Escape"))
-        self.logoutButton.setText(_translate("MainWindow", "Logout"))
+        self.closeButton.setText(_translate("MainWindow", "Close"))
+
+    def closeAction(self):
+        self.MainWindow.close()
 
     def spendMenu(self, account):
         self.centralwidget.deleteLater()
@@ -299,9 +303,10 @@ class Ui_MainWindow(object):
         self.mainMenuButton.setObjectName("mainMenuButton")
         self.mainMenuButton.clicked.connect(self.mainMenu)
 
-        self.logoutButton = QtWidgets.QPushButton(self.centralwidget)
-        self.logoutButton.setGeometry(QtCore.QRect(350, 410, 101, 31))
-        self.logoutButton.setObjectName("logoutButton")     
+        self.closeButton = QtWidgets.QPushButton(self.centralwidget)
+        self.closeButton.setGeometry(QtCore.QRect(350, 410, 101, 31))
+        self.closeButton.setObjectName("closeButton")
+        self.closeButton.clicked.connect(self.closeAction)
 
 
         self.MainWindow.setCentralWidget(self.centralwidget)       
@@ -319,7 +324,7 @@ class Ui_MainWindow(object):
         self.spendButton.setText(_translate("MainWindow", "Spend Money"))
         self.mainMenuButton.setText(_translate("MainWindow", "Back to Main Menu"))
         self.mainMenuButton.setShortcut(_translate("MainWindow", "Escape"))
-        self.logoutButton.setText(_translate("MainWindow", "Logout"))
+        self.closeButton.setText(_translate("MainWindow", "Close"))
 
     def moveMenu(self, account):
         self.centralwidget.deleteLater()
@@ -376,9 +381,10 @@ class Ui_MainWindow(object):
         self.mainMenuButton.setObjectName("mainMenuButton")
         self.mainMenuButton.clicked.connect(self.mainMenu)
 
-        self.logoutButton = QtWidgets.QPushButton(self.centralwidget)
-        self.logoutButton.setGeometry(QtCore.QRect(350, 410, 101, 31))
-        self.logoutButton.setObjectName("logoutButton")     
+        self.closeButton = QtWidgets.QPushButton(self.centralwidget)
+        self.closeButton.setGeometry(QtCore.QRect(350, 410, 101, 31))
+        self.closeButton.setObjectName("closeButton")
+        self.closeButton.clicked.connect(self.closeAction)
 
 
         self.MainWindow.setCentralWidget(self.centralwidget)       
@@ -396,7 +402,7 @@ class Ui_MainWindow(object):
         self.moveButton.setText(_translate("MainWindow", "Move Money"))
         self.mainMenuButton.setText(_translate("MainWindow", "Back to Main Menu"))
         self.mainMenuButton.setShortcut(_translate("MainWindow", "Escape"))
-        self.logoutButton.setText(_translate("MainWindow", "Logout"))
+        self.closeButton.setText(_translate("MainWindow", "Close"))
 
 
 if __name__ == "__main__":
