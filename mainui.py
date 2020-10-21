@@ -1,12 +1,14 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtGui import QIntValidator
+import mainoperations
 import sys
 
 class Ui_MainWindow(object):
     def __init__(self, username):
         self.username=username
         print('Logged in as '+self.username)
+        self.finances=mainoperations.financeoperations(self.username)
 
     def setupUi(self):
         self.MainWindow=QtWidgets.QMainWindow()
@@ -216,6 +218,7 @@ class Ui_MainWindow(object):
         font.setPointSize(12)
         self.addButton.setFont(font)
         self.addButton.setObjectName("addButton")
+        self.addButton.clicked.connect(lambda:self.addAction(account, self.getAmount.text(), self.sBalLabel, self.wBalLabel))
 
         self.mainMenuButton = QtWidgets.QPushButton(self.centralwidget)
         self.mainMenuButton.setGeometry(QtCore.QRect(170, 410, 101, 31))
@@ -237,13 +240,18 @@ class Ui_MainWindow(object):
         else:
             self.headLabel.setText(_translate("MainWindow", "add money to savings"))
 
-        self.sBalLabel.setText(_translate("MainWindow", "Savings Balance: [Amount]"))
-        self.wBalLabel.setText(_translate("MainWindow", "Wallet Balance:  [Amount]"))
+        self.sBalLabel.setText('Savings Balance: '+str(self.finances.savingsBalance))
+        self.wBalLabel.setText('Wallet Balance: '+str(self.finances.walletBalance))
         self.getAmtLabel.setText(_translate("MainWindow", "Enter the Amount to Add:"))
         self.addButton.setText(_translate("MainWindow", "Add Money"))
         self.mainMenuButton.setText(_translate("MainWindow", "Back to Main Menu"))
         self.mainMenuButton.setShortcut(_translate("MainWindow", "Escape"))
         self.closeButton.setText(_translate("MainWindow", "Close"))
+
+    def addAction(self, account, amount, slabel, wlabel):
+        self.finances.addMoney(account, int(amount))
+        slabel.setText('Savings Balance: '+str(self.finances.savingsBalance))
+        wlabel.setText('Wallet Balance: '+str(self.finances.walletBalance))
 
     def closeAction(self):
         self.MainWindow.close()
@@ -297,6 +305,7 @@ class Ui_MainWindow(object):
         font.setPointSize(12)
         self.spendButton.setFont(font)
         self.spendButton.setObjectName("spendButton")
+        self.spendButton.clicked.connect(lambda:self.spendAction(account, self.getAmount.text(), self.sBalLabel, self.wBalLabel))
 
         self.mainMenuButton = QtWidgets.QPushButton(self.centralwidget)
         self.mainMenuButton.setGeometry(QtCore.QRect(170, 410, 101, 31))
@@ -318,13 +327,18 @@ class Ui_MainWindow(object):
         else:
             self.headLabel.setText(_translate("MainWindow", "spend money from savings"))
 
-        self.sBalLabel.setText(_translate("MainWindow", "Savings Balance: [Amount]"))
-        self.wBalLabel.setText(_translate("MainWindow", "Wallet Balance:  [Amount]"))
+        self.sBalLabel.setText('Savings Balance: '+str(self.finances.savingsBalance))
+        self.wBalLabel.setText('Wallet Balance: '+str(self.finances.walletBalance))
         self.getAmtLabel.setText(_translate("MainWindow", "Enter the Amount to Spend:"))
         self.spendButton.setText(_translate("MainWindow", "Spend Money"))
         self.mainMenuButton.setText(_translate("MainWindow", "Back to Main Menu"))
         self.mainMenuButton.setShortcut(_translate("MainWindow", "Escape"))
         self.closeButton.setText(_translate("MainWindow", "Close"))
+
+    def spendAction(self, account, amount, slabel, wlabel):
+        self.finances.spendMoney(account, int(amount))
+        slabel.setText('Savings Balance: '+str(self.finances.savingsBalance))
+        wlabel.setText('Wallet Balance: '+str(self.finances.walletBalance))
 
     def moveMenu(self, account):
         self.centralwidget.deleteLater()
@@ -375,6 +389,8 @@ class Ui_MainWindow(object):
         font.setPointSize(12)
         self.moveButton.setFont(font)
         self.moveButton.setObjectName("moveButton")
+        self.moveButton.clicked.connect(lambda:self.moveAction(account, self.getAmount.text(), self.sBalLabel, self.wBalLabel))
+
 
         self.mainMenuButton = QtWidgets.QPushButton(self.centralwidget)
         self.mainMenuButton.setGeometry(QtCore.QRect(170, 410, 101, 31))
@@ -396,14 +412,18 @@ class Ui_MainWindow(object):
         else:
             self.headLabel.setText(_translate("MainWindow", "wallet to savings"))
 
-        self.sBalLabel.setText(_translate("MainWindow", "Savings Balance: [Amount]"))
-        self.wBalLabel.setText(_translate("MainWindow", "Wallet Balance:  [Amount]"))
+        self.sBalLabel.setText('Savings Balance: '+str(self.finances.savingsBalance))
+        self.wBalLabel.setText('Wallet Balance: '+str(self.finances.walletBalance))
         self.getAmtLabel.setText(_translate("MainWindow", "Enter the Amount to Move:"))
         self.moveButton.setText(_translate("MainWindow", "Move Money"))
         self.mainMenuButton.setText(_translate("MainWindow", "Back to Main Menu"))
         self.mainMenuButton.setShortcut(_translate("MainWindow", "Escape"))
         self.closeButton.setText(_translate("MainWindow", "Close"))
 
+    def moveAction(self, account, amount, slabel, wlabel):
+        self.finances.moveMoney(account, int(amount))
+        slabel.setText('Savings Balance: '+str(self.finances.savingsBalance))
+        wlabel.setText('Wallet Balance: '+str(self.finances.walletBalance))
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)

@@ -37,6 +37,7 @@ class financeoperations:
             SET savings=?, wallet=?
             WHERE username=?
         ''',(self.savingsBalance, self.walletBalance, self.username,))
+        self.sql.execute('COMMIT')
 
     def addMoney(self, account, amount):    #Adds money to specified account 's' or 'w'
         if account=='s':
@@ -64,13 +65,14 @@ class financeoperations:
 
 
 #Testing Block for This Class
-finances=financeoperations('elementalneil')
-finances.addMoney('w', 500)
-finances.addMoney('s', 5000)
-finances.spendMoney('w',300)
-finances.addMoney('s',3000)
-finances.moveMoney('s',1000)
-finances.spendMoney('s',2000)
-finances.moveMoney('w',700)
-print('Savings Balance:',finances.savingsBalance)
-print('Wallet Balance:',finances.walletBalance)
+if __name__=='__main__':
+    finances=financeoperations('elementalneil')
+    finances.addMoney('w', 500)
+    finances.addMoney('s', 5000)
+    finances.spendMoney('w',300)
+    finances.addMoney('s',3000)
+    finances.moveMoney('s',1000)
+    finances.spendMoney('s',2000)
+    finances.moveMoney('w',700)
+    print('Savings Balance:',finances.savingsBalance)
+    print('Wallet Balance:',finances.walletBalance)
