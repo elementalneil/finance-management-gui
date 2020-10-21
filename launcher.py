@@ -11,7 +11,8 @@ ui.MainWindow.show()
 app.exec_()
 
 username=ui.username
-# print('Logged in as '+username)
+if(username==None):
+    sys.exit()
 
 app2 = QtWidgets.QApplication(sys.argv)
 # MainWindow = QtWidgets.QMainWindow()

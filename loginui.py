@@ -6,7 +6,7 @@ import sys
 class Ui_MainWindow(object):
     def __init__(self):
         self.newportal = loginoperations.portal()
-        self.username = 'John'
+        self.username = None
 
     def setupUi(self):
         self.MainWindow=QtWidgets.QMainWindow()
