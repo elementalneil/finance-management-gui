@@ -3,3 +3,4 @@ __pycache__/
 Test/
 accounts.sqlite
 finances.sqlite
+Improvements.txt

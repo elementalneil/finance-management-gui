@@ -252,6 +252,7 @@ class Ui_MainWindow(object):
         self.finances.addMoney(account, int(amount))
         slabel.setText('Savings Balance: '+str(self.finances.savingsBalance))
         wlabel.setText('Wallet Balance: '+str(self.finances.walletBalance))
+        self.getAmount.setText('')
 
     def closeAction(self):
         self.MainWindow.close()
@@ -339,9 +340,22 @@ class Ui_MainWindow(object):
         self.closeButton.setText(_translate("MainWindow", "Close"))
 
     def spendAction(self, account, amount, slabel, wlabel):
+        if amount=='':
+            return
+
+        if account=='s':
+            if self.finances.savingsBalance<int(amount):
+                self.getAmount.setText('')
+                return
+        else:
+            if self.finances.walletBalance<int(amount):
+                self.getAmount.setText('')
+                return
+
         self.finances.spendMoney(account, int(amount))
         slabel.setText('Savings Balance: '+str(self.finances.savingsBalance))
         wlabel.setText('Wallet Balance: '+str(self.finances.walletBalance))
+        self.getAmount.setText('')
 
     def moveMenu(self, account):
         self.centralwidget.deleteLater()
@@ -427,9 +441,25 @@ class Ui_MainWindow(object):
         self.closeButton.setText(_translate("MainWindow", "Close"))
 
     def moveAction(self, account, amount, slabel, wlabel):
+        if amount=='':
+            return
+
+        if account=='s':
+            if self.finances.savingsBalance<int(amount):
+                self.getAmount.setText('')
+                return
+        else:
+            if self.finances.walletBalance<int(amount):
+                self.getAmount.setText('')
+                return
+
+        if amount=='':
+            return
+
         self.finances.moveMoney(account, int(amount))
         slabel.setText('Savings Balance: '+str(self.finances.savingsBalance))
         wlabel.setText('Wallet Balance: '+str(self.finances.walletBalance))
+        self.getAmount.setText('')
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
