@@ -296,7 +296,10 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setPointSize(12)
         self.getAmount.setFont(font)
-        self.getAmount.setValidator(QIntValidator(0,2147483647))
+        if account=='w':
+            self.getAmount.setValidator(QIntValidator(1, self.finances.walletBalance))
+        else:
+            self.getAmount.setValidator(QIntValidator(1, self.finances.savingsBalance))
         self.getAmount.setObjectName("getAmount")
 
         self.spendButton = QtWidgets.QPushButton(self.centralwidget)
@@ -380,7 +383,10 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setPointSize(12)
         self.getAmount.setFont(font)
-        self.getAmount.setValidator(QIntValidator(0,2147483647))
+        if account=='w':
+            self.getAmount.setValidator(QIntValidator(1, self.finances.walletBalance))
+        else:
+            self.getAmount.setValidator(QIntValidator(1, self.finances.savingsBalance))
         self.getAmount.setObjectName("getAmount")
 
         self.moveButton = QtWidgets.QPushButton(self.centralwidget)
