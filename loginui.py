@@ -130,7 +130,7 @@ class Ui_MainWindow(object):
 
     def login_error_popup_actions(self, option):
         if option.text()=='OK':
-            self.loginui()
+            self.inputPassword.setText('')
         else:
             self.MainWindow.close()
 
