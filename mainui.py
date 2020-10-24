@@ -62,6 +62,7 @@ class Ui_MainWindow(object):
         self.addButton = QtWidgets.QPushButton(self.addMoneyBox)
         self.addButton.setGeometry(QtCore.QRect(280, 32, 121, 41))
         self.addButton.setObjectName("addButton")
+        self.addButton.clicked.connect(lambda: self.popup(self.addToWallet, self.addToSavings))
 
 
         self.spendMoneyBox = QtWidgets.QGroupBox(self.centralwidget)
@@ -90,7 +91,7 @@ class Ui_MainWindow(object):
         self.spendButton = QtWidgets.QPushButton(self.spendMoneyBox)
         self.spendButton.setGeometry(QtCore.QRect(280, 32, 121, 41))
         self.spendButton.setObjectName("spendButton")
-
+        self.spendButton.clicked.connect(lambda: self.popup(self.spendFromWallet, self.spendFromSavings))
 
         self.moveMoneyBox = QtWidgets.QGroupBox(self.centralwidget)
         self.moveMoneyBox.setGeometry(QtCore.QRect(100, 330, 451, 101))
@@ -118,6 +119,7 @@ class Ui_MainWindow(object):
         self.moveButton = QtWidgets.QPushButton(self.moveMoneyBox)
         self.moveButton.setGeometry(QtCore.QRect(280, 32, 121, 41))
         self.moveButton.setObjectName("moveButton")
+        self.moveButton.clicked.connect(lambda: self.popup(self.moveToWallet, self.moveToSavings))
 
 
         self.MainWindow.setCentralWidget(self.centralwidget)
@@ -151,6 +153,18 @@ class Ui_MainWindow(object):
                 button.clicked.connect(lambda: self.mainMenuOptions(action, 's'))
             elif radioButton.text()=='To Wallet' or radioButton.text()=='From Wallet' or radioButton.text()=='Wallet to Savings':
                 button.clicked.connect(lambda: self.mainMenuOptions(action, 'w'))
+
+    def popup(self, radioButton1, radioButton2):
+        if radioButton1.isChecked() or radioButton2.isChecked():
+            return
+        msg=QMessageBox()
+        msg.setWindowTitle('Warning')
+        msg.setText('Please Select an Account')
+        msg.setIcon(QMessageBox.Warning)
+        msg.setStandardButtons(QMessageBox.Ok)
+        msg.buttonClicked.connect(msg.close)
+
+        x=msg.exec_()
 
     def mainMenuOptions(self, action, account):
         if action=='add':
