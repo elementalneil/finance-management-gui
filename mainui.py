@@ -62,7 +62,7 @@ class Ui_MainWindow(object):
         self.addButton = QtWidgets.QPushButton(self.addMoneyBox)
         self.addButton.setGeometry(QtCore.QRect(280, 32, 121, 41))
         self.addButton.setObjectName("addButton")
-        self.addButton.clicked.connect(lambda: self.popup(self.addToWallet, self.addToSavings))
+        self.addButton.clicked.connect(lambda: self.mainMenuPopup(self.addToWallet, self.addToSavings))
 
 
         self.spendMoneyBox = QtWidgets.QGroupBox(self.centralwidget)
@@ -91,7 +91,7 @@ class Ui_MainWindow(object):
         self.spendButton = QtWidgets.QPushButton(self.spendMoneyBox)
         self.spendButton.setGeometry(QtCore.QRect(280, 32, 121, 41))
         self.spendButton.setObjectName("spendButton")
-        self.spendButton.clicked.connect(lambda: self.popup(self.spendFromWallet, self.spendFromSavings))
+        self.spendButton.clicked.connect(lambda: self.mainMenuPopup(self.spendFromWallet, self.spendFromSavings))
 
         self.moveMoneyBox = QtWidgets.QGroupBox(self.centralwidget)
         self.moveMoneyBox.setGeometry(QtCore.QRect(100, 330, 451, 101))
@@ -119,7 +119,7 @@ class Ui_MainWindow(object):
         self.moveButton = QtWidgets.QPushButton(self.moveMoneyBox)
         self.moveButton.setGeometry(QtCore.QRect(280, 32, 121, 41))
         self.moveButton.setObjectName("moveButton")
-        self.moveButton.clicked.connect(lambda: self.popup(self.moveToWallet, self.moveToSavings))
+        self.moveButton.clicked.connect(lambda: self.mainMenuPopup(self.moveToWallet, self.moveToSavings))
 
 
         self.MainWindow.setCentralWidget(self.centralwidget)
@@ -154,7 +154,7 @@ class Ui_MainWindow(object):
             elif radioButton.text()=='To Wallet' or radioButton.text()=='From Wallet' or radioButton.text()=='Wallet to Savings':
                 button.clicked.connect(lambda: self.mainMenuOptions(action, 'w'))
 
-    def popup(self, radioButton1, radioButton2):
+    def mainMenuPopup(self, radioButton1, radioButton2):
         if radioButton1.isChecked() or radioButton2.isChecked():
             return
         msg=QMessageBox()
@@ -263,6 +263,7 @@ class Ui_MainWindow(object):
         self.closeButton.setText(_translate("MainWindow", "Close"))
 
     def addAction(self, account, amount, slabel, wlabel):
+        self.successPopup()
         self.finances.addMoney(account, int(amount))
         slabel.setText('Savings Balance: '+str(self.finances.savingsBalance))
         wlabel.setText('Wallet Balance: '+str(self.finances.walletBalance))
@@ -359,17 +360,40 @@ class Ui_MainWindow(object):
 
         if account=='s':
             if self.finances.savingsBalance<int(amount):
+                self.insufficientPopup()
                 self.getAmount.setText('')
                 return
         else:
             if self.finances.walletBalance<int(amount):
+                self.insufficientPopup()
                 self.getAmount.setText('')
                 return
 
+        self.successPopup()
         self.finances.spendMoney(account, int(amount))
         slabel.setText('Savings Balance: '+str(self.finances.savingsBalance))
         wlabel.setText('Wallet Balance: '+str(self.finances.walletBalance))
         self.getAmount.setText('')
+
+    def insufficientPopup(self):
+        msg=QMessageBox()
+        msg.setWindowTitle('Warning')
+        msg.setText('Insufficient Funds')
+        msg.setIcon(QMessageBox.Warning)
+        msg.setStandardButtons(QMessageBox.Ok)
+        msg.buttonClicked.connect(msg.close)
+
+        x=msg.exec_()
+
+    def successPopup(self):
+        msg=QMessageBox()
+        msg.setWindowTitle('Success')
+        msg.setText('Transaction Successful!')
+        msg.setIcon(QMessageBox.Information)
+        msg.setStandardButtons(QMessageBox.Ok)
+        msg.buttonClicked.connect(msg.close)
+
+        x=msg.exec_()
 
     def moveMenu(self, account):
         self.centralwidget.deleteLater()
@@ -425,7 +449,6 @@ class Ui_MainWindow(object):
         self.moveButton.setObjectName("moveButton")
         self.moveButton.clicked.connect(lambda:self.moveAction(account, self.getAmount.text(), self.sBalLabel, self.wBalLabel))
 
-
         self.mainMenuButton = QtWidgets.QPushButton(self.centralwidget)
         self.mainMenuButton.setGeometry(QtCore.QRect(170, 410, 101, 31))
         self.mainMenuButton.setObjectName("mainMenuButton")
@@ -460,16 +483,19 @@ class Ui_MainWindow(object):
 
         if account=='s':
             if self.finances.savingsBalance<int(amount):
+                self.insufficientPopup()
                 self.getAmount.setText('')
                 return
         else:
             if self.finances.walletBalance<int(amount):
+                self.insufficientPopup()
                 self.getAmount.setText('')
                 return
 
         if amount=='':
             return
 
+        self.successPopup()
         self.finances.moveMoney(account, int(amount))
         slabel.setText('Savings Balance: '+str(self.finances.savingsBalance))
         wlabel.setText('Wallet Balance: '+str(self.finances.walletBalance))
