@@ -35,6 +35,14 @@ class Ui_MainWindow(object):
         self.mainlabel.setFont(font)
         self.mainlabel.setObjectName("mainlabel")
 
+        self.passbookButton = QtWidgets.QPushButton(self.centralwidget)
+        self.passbookButton.setGeometry(QtCore.QRect(380, 40, 121, 41))
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.passbookButton.setFont(font)
+        self.passbookButton.setObjectName("passbookButton")
+        self.passbookButton.clicked.connect(self.passbook)
+
 
         self.addMoneyBox = QtWidgets.QGroupBox(self.centralwidget)
         self.addMoneyBox.setGeometry(QtCore.QRect(100, 110, 451, 101))
@@ -138,6 +146,7 @@ class Ui_MainWindow(object):
         self.moveToSavings.setText(_translate("MainWindow", "Wallet to Savings"))
         self.moveButton.setText(_translate("MainWindow", "Start Moving"))
         self.mainlabel.setText(_translate("MainWindow", "Main Menu"))
+        self.passbookButton.setText(_translate("MainWindow", "PASSBOOK"))
 
         QtCore.QMetaObject.connectSlotsByName(self.MainWindow)
 
@@ -182,6 +191,95 @@ class Ui_MainWindow(object):
                 self.moveMenu('s')
             else:
                 self.moveMenu('w')
+
+    def passbook(self):
+        self.centralwidget.deleteLater()
+        self.centralwidget = QtWidgets.QWidget(self.MainWindow)
+        self.centralwidget.setObjectName("centralwidget")
+
+        self.headLabel = QtWidgets.QLabel(self.centralwidget)
+        self.headLabel.setGeometry(QtCore.QRect(190, 0, 261, 51))
+        font = QtGui.QFont()
+        font.setFamily("Baron Neue")
+        font.setPointSize(20)
+        self.headLabel.setFont(font)
+        self.headLabel.setObjectName("headLabel")
+
+        self.usernameLabel = QtWidgets.QLabel(self.centralwidget)
+        self.usernameLabel.setGeometry(QtCore.QRect(50, 70, 121, 16))
+        self.usernameLabel.setObjectName("usernameLabel")
+
+        self.sLabel = QtWidgets.QLabel(self.centralwidget)
+        self.sLabel.setGeometry(QtCore.QRect(210, 70, 161, 16))
+        self.sLabel.setObjectName("sLabel")
+
+        self.wLabel = QtWidgets.QLabel(self.centralwidget)
+        self.wLabel.setGeometry(QtCore.QRect(440, 70, 171, 16))
+        self.wLabel.setObjectName("wLabel")
+
+        self.scrollArea = QtWidgets.QScrollArea(self.centralwidget)
+        self.scrollArea.setGeometry(QtCore.QRect(50, 110, 541, 331))
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.scrollArea.sizePolicy().hasHeightForWidth())
+        self.scrollArea.setSizePolicy(sizePolicy)
+        self.scrollArea.setMinimumSize(QtCore.QSize(0, 40))
+        self.scrollArea.setWidgetResizable(True)
+        self.scrollArea.setObjectName("scrollArea")
+
+        self.scrollAreaWidgetContents = QtWidgets.QWidget()
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 539, 329))
+        self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
+
+        self.verticalLayout = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents)
+        self.verticalLayout.setObjectName("verticalLayout")
+
+        for i in range(0,20):
+            self.displayLog()
+        
+        self.scrollArea.setWidget(self.scrollAreaWidgetContents)
+        self.MainWindow.setCentralWidget(self.centralwidget)
+
+        _translate = QtCore.QCoreApplication.translate
+        self.MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        self.headLabel.setText(_translate("MainWindow", "transaction logs"))
+        self.usernameLabel.setText(_translate("MainWindow", "[Username]"))
+        self.sLabel.setText(_translate("MainWindow", "Savings: [Savings Balance]"))
+        self.wLabel.setText(_translate("MainWindow", "Wallet: [Wallet Balance]"))
+
+    def displayLog(self):
+        self.iSavings = QtWidgets.QLabel(self.scrollAreaWidgetContents)
+        self.iSavings.setObjectName("iSavings")
+        self.verticalLayout.addWidget(self.iSavings)
+
+        self.iWallet = QtWidgets.QLabel(self.scrollAreaWidgetContents)
+        self.iWallet.setObjectName("iWallet")
+        self.verticalLayout.addWidget(self.iWallet)
+
+        self.details = QtWidgets.QLabel(self.scrollAreaWidgetContents)
+        self.details.setObjectName("details")
+        self.verticalLayout.addWidget(self.details)
+
+        self.fSavings = QtWidgets.QLabel(self.scrollAreaWidgetContents)
+        self.fSavings.setObjectName("fSavings")
+        self.verticalLayout.addWidget(self.fSavings)
+
+        self.fWallet = QtWidgets.QLabel(self.scrollAreaWidgetContents)
+        self.fWallet.setObjectName("fWallet")
+        self.verticalLayout.addWidget(self.fWallet)
+
+        self.divider = QtWidgets.QFrame(self.scrollAreaWidgetContents)
+        self.divider.setFrameShape(QtWidgets.QFrame.HLine)
+        self.divider.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.divider.setObjectName("divider")
+        self.verticalLayout.addWidget(self.divider)
+
+        self.iSavings.setText("Initial Savings Balance: [Amount]")
+        self.iWallet.setText("Initial Wallet Balance: [Amount]")
+        self.details.setText("Transaction Details: Moved [Amount] from Savings to Wallet")
+        self.fSavings.setText("Final Savings Balance: [Amount]")
+        self.fWallet.setText("Final Wallet Balance: [Amount]")
 
     def addMenu(self, account):
         self.centralwidget.deleteLater()
