@@ -249,6 +249,10 @@ class Ui_MainWindow(object):
         self.wLabel.setText(_translate("MainWindow", "Wallet: [Wallet Balance]"))
 
     def displayLog(self):
+        self.curdate = QtWidgets.QLabel(self.scrollAreaWidgetContents)
+        self.curdate.setObjectName("curdate")
+        self.verticalLayout.addWidget(self.curdate)
+        
         self.iSavings = QtWidgets.QLabel(self.scrollAreaWidgetContents)
         self.iSavings.setObjectName("iSavings")
         self.verticalLayout.addWidget(self.iSavings)
@@ -280,6 +284,7 @@ class Ui_MainWindow(object):
         self.details.setText("Transaction Details: Moved [Amount] from Savings to Wallet")
         self.fSavings.setText("Final Savings Balance: [Amount]")
         self.fWallet.setText("Final Wallet Balance: [Amount]")
+        self.curdate.setText("Date: [Date]")
 
     def addMenu(self, account):
         self.centralwidget.deleteLater()

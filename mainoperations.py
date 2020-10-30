@@ -26,6 +26,7 @@ class financeoperations:
 
         self.savingsBalance=0
         self.walletBalance=0
+        self.numberOfLogs=0
         self.updateSelf()
 
     def updateSelf(self):   #Updates object balances from database
@@ -39,6 +40,12 @@ class financeoperations:
         else:
             self.savingsBalance=row[1]
             self.walletBalance=row[2]
+        self.sql.execute('SELECT COUNT(*) FROM Logs WHERE username=?',(self.username,))
+        num=self.sql.fetchone()
+        if num==None:
+            pass
+        else:
+            self.numberOfLogs=int(num[0])
 
     def updateDB(self):     #Updates database from object balances
         self.sql.execute('''
@@ -101,16 +108,30 @@ class financeoperations:
         self.updatelog(isavings, iwallet, details, fsavings, fwallet)
         self.updateDB()
 
+    def returnLogs(self, count):
+        rowlist=list()
+        self.sql.execute('SELECT * FROM Logs WHERE username=?',(self.username,))
+        data=self.sql.fetchall()
+        for i in range(0, count):
+            if data[i]==None:  
+                return rowlist
+            else:
+                row=tuple()
+                row=data[i]
+            rowlist.append(row)
+        return rowlist
+
     def updatelog(self, isavings, iwallet, details, fsavings, fwallet):
         self.sql.execute('''
                 INSERT INTO Logs
                 VALUES (?, ?, ?, ?, ?, ?, (SELECT date('now')))
             ''',(self.username, isavings, iwallet, details, fsavings, fwallet))
+        self.numberOfLogs+=1
         self.sql.execute('COMMIT')
 
 #Testing Block for This Class
 if __name__=='__main__':
-    finances=financeoperations('elementalneil')
+    finances=financeoperations('financetest')
     finances.addMoney('w', 500)
     finances.addMoney('s', 5000)
     finances.spendMoney('w',300)
@@ -120,3 +141,5 @@ if __name__=='__main__':
     finances.moveMoney('w',700)
     print('Savings Balance:',finances.savingsBalance)
     print('Wallet Balance:',finances.walletBalance)
+    print('Number Of Logs:',finances.numberOfLogs)
+    print(finances.returnLogs(finances.numberOfLogs))
