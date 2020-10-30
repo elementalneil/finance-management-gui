@@ -235,8 +235,11 @@ class Ui_MainWindow(object):
         self.verticalLayout = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout.setObjectName("verticalLayout")
 
-        for i in range(0,20):
-            self.displayLog()
+        data=self.finances.returnLogs(self.finances.numberOfLogs)
+        for i in range(0,self.finances.numberOfLogs):
+            row=tuple()
+            row=data[i]
+            self.displayLog(row)
         
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.MainWindow.setCentralWidget(self.centralwidget)
@@ -244,11 +247,11 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         self.MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.headLabel.setText(_translate("MainWindow", "transaction logs"))
-        self.usernameLabel.setText(_translate("MainWindow", "[Username]"))
-        self.sLabel.setText(_translate("MainWindow", "Savings: [Savings Balance]"))
-        self.wLabel.setText(_translate("MainWindow", "Wallet: [Wallet Balance]"))
+        self.usernameLabel.setText(_translate("MainWindow", self.username))
+        self.sLabel.setText(_translate("MainWindow", "Savings Balance: "+str(self.finances.savingsBalance)))
+        self.wLabel.setText(_translate("MainWindow", "Wallet Balance: "+str(self.finances.walletBalance)))
 
-    def displayLog(self):
+    def displayLog(self, data):
         self.curdate = QtWidgets.QLabel(self.scrollAreaWidgetContents)
         self.curdate.setObjectName("curdate")
         self.verticalLayout.addWidget(self.curdate)
@@ -279,12 +282,12 @@ class Ui_MainWindow(object):
         self.divider.setObjectName("divider")
         self.verticalLayout.addWidget(self.divider)
 
-        self.iSavings.setText("Initial Savings Balance: [Amount]")
-        self.iWallet.setText("Initial Wallet Balance: [Amount]")
-        self.details.setText("Transaction Details: Moved [Amount] from Savings to Wallet")
-        self.fSavings.setText("Final Savings Balance: [Amount]")
-        self.fWallet.setText("Final Wallet Balance: [Amount]")
-        self.curdate.setText("Date: [Date]")
+        self.curdate.setText("Date: "+data[6])
+        self.iSavings.setText("Initial Savings Balance: "+str(data[1]))
+        self.iWallet.setText("Initial Wallet Balance: "+str(data[2]))
+        self.details.setText("Transaction Details: "+data[3])
+        self.fSavings.setText("Final Savings Balance: "+str(data[4]))
+        self.fWallet.setText("Final Wallet Balance: "+str(data[5]))
 
     def addMenu(self, account):
         self.centralwidget.deleteLater()
